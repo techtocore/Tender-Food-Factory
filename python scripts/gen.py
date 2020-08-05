@@ -2,11 +2,16 @@ import pyqrcode
 import png
 from pyqrcode import QRCode
 import csv
+import os
 from datetime import date
 from PIL import Image, ImageDraw, ImageFont
 
 today = date.today()
 curr_date = today.strftime("%Y-%m-%d")
+try:
+    os.mkdir('qr')
+except:
+    pass
 
 with open('sku.csv', mode='r') as file:
     next(file)
@@ -15,10 +20,11 @@ with open('sku.csv', mode='r') as file:
         s = lines[0] + '_' + lines[1] + '_' + curr_date
         # print(s)
         url = pyqrcode.create(s)
-        url.png(s + '.png', scale=4)
+        url.png(s + '_temp.png', scale=4)
 
-        im = Image.open(s + '.png')
+        im = Image.open(s + '_temp.png')
         im = im.convert("RGBA")
+        os.remove(s + '_temp.png')
 
         img = Image.new('RGB', (350, 200), color=(255, 255, 255))
         d = ImageDraw.Draw(img)
@@ -29,4 +35,4 @@ with open('sku.csv', mode='r') as file:
 
         img.paste(im, (180, 30, 328, 178))
 
-        img.save(s + 'pil_text.png')
+        img.save('qr/' + s + '.png')
