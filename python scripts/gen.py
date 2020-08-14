@@ -17,7 +17,7 @@ with open('sku.csv', mode='r') as file:
     next(file)
     csvFile = csv.reader(file)
     for lines in csvFile:
-        s = lines[0] + '_' + lines[1] + '_' + curr_date
+        s = lines[0] + '_' + lines[1] + '_' + lines[5]
         # print(s)
         url = pyqrcode.create(s)
         url.png(s + '_temp.png', scale=3)
@@ -26,7 +26,8 @@ with open('sku.csv', mode='r') as file:
         im = im.convert("RGBA")
         os.remove(s + '_temp.png')
 
-        img = Image.new('RGB', (267, 132), color=(255, 255, 255)) # 6cm x 3.5cm
+        img = Image.new('RGB', (267, 132), color=(
+            255, 255, 255))  # 6cm x 3.5cm
         d = ImageDraw.Draw(img)
         font = ImageFont.truetype("arial.ttf", 17)
         d.text((15, 30), lines[2], fill=(0, 0, 0), font=font)
@@ -35,4 +36,5 @@ with open('sku.csv', mode='r') as file:
 
         img.paste(im, (150, 15, 261, 126))
 
-        img.save('qr/' + s + '.png')
+        for i in range(int(lines[6])):
+            img.save('qr/' + s + '_' + str(i+1) + '.png')
