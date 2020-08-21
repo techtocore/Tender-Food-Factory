@@ -21,10 +21,10 @@ try:
             date_data = curr_date
             if len(lines[5]) > 0:
                 date_data = lines[5]
-            s = lines[0] + '_' + lines[1] + '_' + date_data
+            s = lines[0]
             # print(s)
             url = pyqrcode.create(s)
-            url.png(s + '_temp.png', scale=3)
+            url.png(s + '_temp.png', scale=4)
 
             im = Image.open(s + '_temp.png')
             im = im.convert("RGBA")
@@ -38,7 +38,7 @@ try:
             d.text((15, 60), lines[3], fill=(0, 0, 0), font=font)
             d.text((15, 90), lines[4], fill=(0, 0, 0), font=font)
 
-            img.paste(im, (150, 15, 261, 126))
+            img.paste(im, (150, 12, 266, 128))
 
             ct = 1
             if len(lines[6]) > 0:
